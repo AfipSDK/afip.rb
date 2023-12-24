@@ -21,11 +21,6 @@
     <a href="https://github.com/afipsdk/afip.rb/issues">Reportar un bug</a>
   </p>
 </p>
-<p align="center">
-  <a href="https://docs.afipsdk.com/">
-    <img src="https://github.com/afipsdk/afipsdk.github.io/blob/master/images/implementation.png" alt="Implementation">
-  </a>
-</p>
 
 
 <!-- DOCS -->
