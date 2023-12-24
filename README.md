@@ -1,35 +1,55 @@
-# Afip
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]](https://github.com/afipsdk/afip.rb/graphs/contributors)
+[![Closed issues][issues-shield]](https://github.com/afipsdk/afip.rb/issues)
 
-TODO: Delete this and the text below, and describe your gem
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/afip`. To experiment with that code, run `bin/console` for an interactive prompt.
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/afipsdk/afip.rb">
+    <img src="https://github.com/afipsdk/afipsdk.github.io/blob/master/images/logo-colored.png" alt="Logo" width="130" height="130">
+  </a>
 
-## Installation
+  <h3 align="center">Afip.rb</h3>
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+  <p align="center">
+    Librería para conectarse a los Web Services de AFIP en Ruby
+    <br />
+    <a href="https://docs.afipsdk.com"><strong>Explorar documentación »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/afipsdk/afip.rb/issues">Reportar un bug</a>
+  </p>
+</p>
+<p align="center">
+  <a href="https://docs.afipsdk.com/">
+    <img src="https://github.com/afipsdk/afipsdk.github.io/blob/master/images/implementation.png" alt="Implementation">
+  </a>
+</p>
 
-Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+<!-- DOCS -->
+## Documentación
+[Explorar documentación](https://docs.afipsdk.com)
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+<!-- ABOUT THE PROJECT -->
+## Acerca del proyecto
+Con más de 60.000 descargas en sus versiones de PHP, Node y Ruby desde el 2017 Afip SDK es la librería elegida por los desarrolladores para integrar sus plataformas con AFIP.
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+Esta librería fue creada con la intención de ayudar a los programadores a usar los Web Services de AFIP sin romperse la cabeza ni perder tiempo tratando de entender la complicada documentación que AFIP provee.
 
-## Usage
+<!-- CONTACT -->
+### Contacto
+Afip SDK - afipsdk@gmail.com
 
-TODO: Write usage instructions here
+Link del proyecto: [https://github.com/afipsdk/afip.rb](https://github.com/afipsdk/afip.rb)
 
-## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+_Este software y sus desarrolladores no tienen ninguna relación con la AFIP._
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+<!-- MARKDOWN LINKS & IMAGES -->
+[packagist-shield]: https://img.shields.io/packagist/dt/afipsdk/afip.rb.svg??logo=php&?logoColor=white
+[contributors-shield]: https://img.shields.io/github/contributors/afipsdk/afip.rb.svg?color=orange
+[issues-shield]: https://img.shields.io/github/issues-closed-raw/afipsdk/afip.rb.svg?color=blueviolet
+[license-shield]: https://img.shields.io/github/license/afipsdk/afip.rb.svg?color=blue
 
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/afip.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
