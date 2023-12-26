@@ -6,7 +6,6 @@ require "json"
 require "net/http"
 
 require_relative "afip/version"
-require_relative "afip/config"
 require_relative "afip/web_service"
 require_relative "afip/electronic_billing"
 require_relative "afip/register_inscription_proof"
