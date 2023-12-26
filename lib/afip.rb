@@ -9,17 +9,27 @@ require_relative "afip/version"
 require_relative "afip/config"
 require_relative "afip/web_service"
 require_relative "afip/electronic_billing"
+require_relative "afip/register_inscription_proof"
+require_relative "afip/register_scope_ten"
+require_relative "afip/register_scope_thirteen"
 
 # AfipSDK is the easyest way to connect with AFIP
 module Afip
   @config = Afip::AfipConfiguration.new
 
   @ElectronicBilling = Afip::WebServices::ElectronicBilling.new(self)
+  @RegisterInscriptionProof = Afip::WebServices::RegisterInscriptionProof.new(self)
+  @RegisterScopeTen = Afip::WebServices::RegisterScopeTen.new(self)
+  @RegisterScopeThirteen = Afip::WebServices::RegisterScopeThirteen.new(self)
 
   class << self
     extend Forwardable
 
-    attr_reader :ElectronicBilling, :config
+    attr_reader :ElectronicBilling,
+                :RegisterInscriptionProof,
+                :RegisterScopeTen,
+                :RegisterScopeThirteen,
+                :config
 
     # User configurable options
     def_delegators :@config, :CUIT, :CUIT=
