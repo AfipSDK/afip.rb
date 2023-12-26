@@ -22,7 +22,7 @@ module Afip
 
         request = Net::HTTP::Post.new(url)
         request["Content-Type"] = "application/json"
-        request["sdk-version-number"] = afip::VERSION
+        request["sdk-version-number"] = Afip::VERSION
         request["sdk-library"] = "ruby"
         request["sdk-environment"] = afip.production == true ? "prod" : "dev"
         request["Authorization"] = "Bearer #{afip.access_token}" if afip.access_token
@@ -217,7 +217,7 @@ module Afip
         if operation == "FEDummy"
           {}
         else
-          ta = afip.getServiceTA("wsfe")
+          ta = getTokenAuthorization
 
           {
             "Auth": {

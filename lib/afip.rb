@@ -15,104 +15,110 @@ require_relative "afip/register_scope_thirteen"
 
 # AfipSDK is the easyest way to connect with AFIP
 module Afip
-  @config = Afip::AfipConfiguration.new
-
-  @ElectronicBilling = Afip::WebServices::ElectronicBilling.new(self)
-  @RegisterInscriptionProof = Afip::WebServices::RegisterInscriptionProof.new(self)
-  @RegisterScopeTen = Afip::WebServices::RegisterScopeTen.new(self)
-  @RegisterScopeThirteen = Afip::WebServices::RegisterScopeThirteen.new(self)
-
-  class << self
-    extend Forwardable
-
-    attr_reader :ElectronicBilling,
-                :RegisterInscriptionProof,
-                :RegisterScopeTen,
-                :RegisterScopeThirteen,
-                :config
-
-    # User configurable options
-    def_delegators :@config, :CUIT, :CUIT=
-    def_delegators :@config, :cert, :cert=
-    def_delegators :@config, :key, :key=
-    def_delegators :@config, :production, :production=
-    def_delegators :@config, :access_token, :access_token=
+  def self.new(options)
+    Afip::Instance.new(options)
   end
 
-  # Gets token authorization for an AFIP Web Service
-  #
-  # If force is true it forces to create a new TA
-  def self.getServiceTA(service, force = false)
-    url = URI("https://app.afipsdk.com/api/v1/afip/auth")
+  class Instance
+    attr_accessor :CUIT,
+                  :cert,
+                  :key,
+                  :production,
+                  :access_token,
+                  :ElectronicBilling,
+                  :RegisterInscriptionProof,
+                  :RegisterScopeTen,
+                  :RegisterScopeThirteen
 
-    https = Net::HTTP.new(url.host, url.port)
-    https.use_ssl = true
+    def initialize(options)
+      raise "CUIT field is required in options" unless options.key?(:CUIT)
 
-    request = Net::HTTP::Post.new(url)
-    request["Content-Type"] = "application/json"
-    request["sdk-version-number"] = Afip::VERSION
-    request["sdk-library"] = "ruby"
-    request["sdk-environment"] = @config.production == true ? "prod" : "dev"
-    request["Authorization"] = "Bearer #{@config.access_token}" if @config.access_token
+      self.CUIT = options[:CUIT]
+      self.production = options.key?(:production) ? options[:production] : false
+      self.cert = options[:cert]
+      self.key = options[:key]
 
-    data = {
-      "environment": @config.production == true ? "prod" : "dev",
-      "tax_id": @config.CUIT,
-      "wsid": service,
-      "force_create": force
-    }
-
-    data["cert"] = @config.cert if @config.cert
-    data["key"] = @config.key if @config.key
-
-    request.body = JSON.dump(data)
-    response = https.request(request)
-
-    unless response.is_a? Net::HTTPSuccess
-      begin
-        raise JSON.parse(response.read_body)
-      rescue
-        raise response.read_body
-      end
+      self.ElectronicBilling = Afip::WebServices::ElectronicBilling.new(self)
+      self.RegisterInscriptionProof = Afip::WebServices::RegisterInscriptionProof.new(self)
+      self.RegisterScopeTen = Afip::WebServices::RegisterScopeTen.new(self)
+      self.RegisterScopeThirteen = Afip::WebServices::RegisterScopeThirteen.new(self)
     end
 
-    JSON.parse(response.read_body)
-  end
+    # Gets token authorization for an AFIP Web Service
+    #
+    # If force is true it forces to create a new TA
+    def getServiceTA(service, force = false)
+      url = URI("https://app.afipsdk.com/api/v1/afip/auth")
 
-  # Get last request and last response XML
-  def self.getLastRequestXML
-    url = URI("https://app.afipsdk.com/api/v1/afip/requests/last-xml")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
 
-    https = Net::HTTP.new(url.host, url.port)
-    https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      request["Content-Type"] = "application/json"
+      request["sdk-version-number"] = Afip::VERSION
+      request["sdk-library"] = "ruby"
+      request["sdk-environment"] = production == true ? "prod" : "dev"
+      request["Authorization"] = "Bearer #{access_token}" if access_token
 
-    request = Net::HTTP::Get.new(url)
-    request["sdk-version-number"] = Afip::VERSION
-    request["sdk-library"] = "ruby"
-    request["sdk-environment"] = @config.production == true ? "prod" : "dev"
-    request["Authorization"] = "Bearer #{@config.access_token}" if @config.access_token
+      data = {
+        "environment": production == true ? "prod" : "dev",
+        "tax_id": self.CUIT,
+        "wsid": service,
+        "force_create": force
+      }
 
-    data["cert"] = @config.cert if @config.cert
-    data["key"] = @config.key if @config.key
+      data["cert"] = cert if cert
+      data["key"] = key if key
 
-    response = https.request(request)
+      request.body = JSON.dump(data)
+      response = https.request(request)
 
-    unless response.is_a? Net::HTTPSuccess
-      begin
-        raise JSON.parse(response.read_body)
-      rescue
-        raise response.read_body
+      unless response.is_a? Net::HTTPSuccess
+        begin
+          raise JSON.parse(response.read_body)
+        rescue
+          raise response.read_body
+        end
       end
+
+      JSON.parse(response.read_body)
     end
 
-    JSON.parse(response.read_body)
-  end
+    # Get last request and last response XML
+    def getLastRequestXML
+      url = URI("https://app.afipsdk.com/api/v1/afip/requests/last-xml")
 
-  # Create generic Web Service
-  def self.webService(service, options = {})
-    options[:service] = service
-    options[:generic] = true
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
 
-    Afip::WebService.new(self, options)
+      request = Net::HTTP::Get.new(url)
+      request["sdk-version-number"] = Afip::VERSION
+      request["sdk-library"] = "ruby"
+      request["sdk-environment"] = production == true ? "prod" : "dev"
+      request["Authorization"] = "Bearer #{access_token}" if access_token
+
+      data["cert"] = cert if cert
+      data["key"] = key if key
+
+      response = https.request(request)
+
+      unless response.is_a? Net::HTTPSuccess
+        begin
+          raise JSON.parse(response.read_body)
+        rescue
+          raise response.read_body
+        end
+      end
+
+      JSON.parse(response.read_body)
+    end
+
+    # Create generic Web Service
+    def webService(service, options = {})
+      options[:service] = service
+      options[:generic] = true
+
+      Afip::WebService.new(self, options)
+    end
   end
 end
