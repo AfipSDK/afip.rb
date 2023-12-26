@@ -36,6 +36,7 @@ module Afip
       self.production = options.key?(:production) ? options[:production] : false
       self.cert = options[:cert]
       self.key = options[:key]
+      self.access_token = options[:access_token]
 
       self.ElectronicBilling = Afip::WebServices::ElectronicBilling.new(self)
       self.RegisterInscriptionProof = Afip::WebServices::RegisterInscriptionProof.new(self)
