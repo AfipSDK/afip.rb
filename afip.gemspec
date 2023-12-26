@@ -3,7 +3,7 @@
 require_relative "lib/afip/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "afip"
+  spec.name = "afip.rb"
   spec.version = Afip::VERSION
   spec.authors = ["Afip SDK"]
   spec.email = ["afipsdk@gmail.com"]
