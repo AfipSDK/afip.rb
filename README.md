@@ -1,6 +1,8 @@
 <!-- PROJECT SHIELDS -->
+[![Gem][gem-shield]](https://rubygems.org/gems/afip.rb/)
 [![Contributors][contributors-shield]](https://github.com/afipsdk/afip.rb/graphs/contributors)
 [![Closed issues][issues-shield]](https://github.com/afipsdk/afip.rb/issues)
+[![License][license-shield]](https://github.com/afipsdk/afip.rb/blob/master/LICENSE.txt)
 
 
 <!-- PROJECT LOGO -->
@@ -43,8 +45,7 @@ Link del proyecto: [https://github.com/afipsdk/afip.rb](https://github.com/afips
 _Este software y sus desarrolladores no tienen ninguna relación con la AFIP._
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[packagist-shield]: https://img.shields.io/packagist/dt/afipsdk/afip.rb.svg??logo=php&?logoColor=white
+[gem-shield]: https://img.shields.io/gem/dt/afip.rb.svg?logo=ruby&?logoColor=white
 [contributors-shield]: https://img.shields.io/github/contributors/afipsdk/afip.rb.svg?color=orange
 [issues-shield]: https://img.shields.io/github/issues-closed-raw/afipsdk/afip.rb.svg?color=blueviolet
 [license-shield]: https://img.shields.io/github/license/afipsdk/afip.rb.svg?color=blue
-
