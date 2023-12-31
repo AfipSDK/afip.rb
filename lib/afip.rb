@@ -97,9 +97,6 @@ module Afip
       request["sdk-environment"] = production == true ? "prod" : "dev"
       request["Authorization"] = "Bearer #{access_token}" if access_token
 
-      data["cert"] = cert if cert
-      data["key"] = key if key
-
       response = https.request(request)
 
       unless response.is_a? Net::HTTPSuccess
