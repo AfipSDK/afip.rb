@@ -3,7 +3,7 @@
 module Afip
   class WebService
     # Configurable options
-    attr_accessor :var, :soapv12, :WSDL, :URL, :WSDL_TEST, :URL_TEST, :afip, :options
+    attr_accessor :soapv12, :WSDL, :URL, :WSDL_TEST, :URL_TEST, :afip, :options
 
     def initialize(afip, options = {})
       self.afip = afip
