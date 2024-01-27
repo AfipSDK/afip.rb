@@ -117,5 +117,102 @@ module Afip
 
       Afip::WebService.new(self, options)
     end
+
+    # Create AFIP cert
+    def createCert(username, password, cert_alias)
+      url = URI("https://app.afipsdk.com/api/v1/afip/certs")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Post.new(url)
+      request["Content-Type"] = "application/json"
+      request["sdk-version-number"] = Afip::VERSION
+      request["sdk-library"] = "ruby"
+      request["sdk-environment"] = production == true ? "prod" : "dev"
+      request["Authorization"] = "Bearer #{access_token}" if access_token
+
+      data = {
+        "environment": production == true ? "prod" : "dev",
+        "tax_id": self.CUIT,
+        "username": username,
+        "password": password,
+        "alias": cert_alias
+      }
+
+      retry_request = 24
+
+      while (retry_request -= 1) >= 0
+        request.body = JSON.dump(data)
+        response = https.request(request)
+
+        unless response.is_a? Net::HTTPSuccess
+          begin
+            raise JSON.parse(response.read_body)
+          rescue
+            raise response.read_body
+          end
+        end
+
+        decoded_res = JSON.parse(response.read_body)
+
+        return decoded_res["data"] if decoded_res["status"] == "complete"
+
+        data["long_job_id"] = decoded_res["long_job_id"] if decoded_res["long_job_id"]
+
+        sleep(5)
+      end
+
+      raise "Error: Waiting for too long"
+    end
+
+    # Create authorization to use a web service
+    def createWSAuth(username, password, cert_alias, wsid)
+      url = URI("https://app.afipsdk.com/api/v1/afip/ws-auths")
+
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+
+      request = Net::HTTP::Post.new(url)
+      request["Content-Type"] = "application/json"
+      request["sdk-version-number"] = Afip::VERSION
+      request["sdk-library"] = "ruby"
+      request["sdk-environment"] = production == true ? "prod" : "dev"
+      request["Authorization"] = "Bearer #{access_token}" if access_token
+
+      data = {
+        "environment": production == true ? "prod" : "dev",
+        "tax_id": self.CUIT,
+        "username": username,
+        "password": password,
+        "alias": cert_alias,
+        "wsid": wsid
+      }
+
+      retry_request = 24
+
+      while (retry_request -= 1) >= 0
+        request.body = JSON.dump(data)
+        response = https.request(request)
+
+        unless response.is_a? Net::HTTPSuccess
+          begin
+            raise JSON.parse(response.read_body)
+          rescue
+            raise response.read_body
+          end
+        end
+
+        decoded_res = JSON.parse(response.read_body)
+
+        return decoded_res["data"] if decoded_res["status"] == "complete"
+
+        data["long_job_id"] = decoded_res["long_job_id"] if decoded_res["long_job_id"]
+
+        sleep(5)
+      end
+
+      raise "Error: Waiting for too long"
+    end
   end
 end
