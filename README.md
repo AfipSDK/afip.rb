@@ -20,6 +20,9 @@
     <a href="https://docs.afipsdk.com"><strong>Explorar documentación »</strong></a>
     <br />
     <br />
+    <a href="https://discord.gg/A6TuHEyAZm"><strong>Comunidad Afip SDK</strong></a>
+    <br />
+    <br />
     <a href="https://github.com/afipsdk/afip.rb/issues">Reportar un bug</a>
   </p>
 </p>
@@ -28,6 +31,11 @@
 <!-- DOCS -->
 ## Documentación
 [Explorar documentación](https://docs.afipsdk.com)
+
+<!-- COMUNITY -->
+## Comunidad
+[Comunidad Afip SDK](https://discord.gg/A6TuHEyAZm)
+
 
 <!-- ABOUT THE PROJECT -->
 ## Acerca del proyecto
