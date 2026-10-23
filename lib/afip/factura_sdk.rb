@@ -90,7 +90,7 @@ module Afip
     }.freeze
 
     # api_url: base URL of the Factura SDK API. access_token: the one sent in every request
-    # (facturasdk_access_token, or the access token of Afip). environment: the one reported to the
+    # (the access token of Afip). environment: the one reported to the
     # API, from the token when it is a Factura SDK token. The intervals are the seconds between
     # polls and the attempts before giving up: automations (ARCA with the tax password,
     # verification) take from seconds to a couple of minutes, an invoice is authorized in seconds
@@ -100,7 +100,7 @@ module Afip
     def initialize(afip)
       self.afip = afip
       self.api_url = "https://app.afipsdk.com/api/v1"
-      self.access_token = afip.facturasdk_access_token || afip.access_token
+      self.access_token = afip.access_token
 
       self.environment = if access_token.to_s.start_with?("fsk_prod_")
                            "prod"

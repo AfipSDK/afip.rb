@@ -25,7 +25,6 @@ module Afip
                   :key,
                   :production,
                   :access_token,
-                  :facturasdk_access_token,
                   :ElectronicBilling,
                   :RegisterInscriptionProof,
                   :RegisterScopeTen,
@@ -39,8 +38,6 @@ module Afip
       self.cert = options[:cert]
       self.key = options[:key]
       self.access_token = options[:access_token]
-      # Access token of a Factura SDK project (fsk_dev_… or fsk_prod_…), when access_token is not one
-      self.facturasdk_access_token = options[:facturasdk_access_token]
 
       self.ElectronicBilling = Afip::WebServices::ElectronicBilling.new(self)
       self.RegisterInscriptionProof = Afip::WebServices::RegisterInscriptionProof.new(self)
