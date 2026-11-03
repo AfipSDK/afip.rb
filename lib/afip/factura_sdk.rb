@@ -124,7 +124,7 @@ module Afip
     # in the background: the result arrives at your webhook. Options: idempotency_key (identifier
     # of the sale in your system; repeating it returns the same invoice instead of issuing another
     # one) and wait (polls until the invoice is decided). With "sync": true in the data Factura SDK
-    # decides it within the request
+    # decides it within the request. In the sandbox, "sandbox": { "result": … } forces the outcome
     def createInvoice(data, options = {})
       idempotency_key = option(options, :idempotency_key)
       headers = idempotency_key ? { "Idempotency-Key" => idempotency_key } : {}
@@ -270,7 +270,7 @@ module Afip
 
     # List certificates, with cursor pagination
     #
-    # Filters: tax_id, status, limit, cursor
+    # Filters: tax_id, search, status, limit, cursor
     def getCertificates(params = {})
       request(:get, "certificates", nil, params)
     end
@@ -278,6 +278,25 @@ module Afip
     # Revoke a certificate: it no longer signs
     def revokeCertificate(id)
       request(:post, "certificates/#{id}/revoke")
+    end
+
+    # Renew a certificate in place: it keeps its id, so the issuers that use it keep invoicing with
+    # the new one
+    #
+    # Uploaded (cert and key in PEM) it answers the certificate. Renewed in ARCA (source
+    # "automation", with username and password) it is an automation: with wait returns it
+    # finished, with the certificate and renewed: true in data. A revoked certificate can not be
+    # renewed
+    def renewCertificate(id, data, wait = true)
+      automation(request(:post, "certificates/#{id}/renew", data), wait)
+    end
+
+    # Delete a certificate: it disappears from the project without being revoked in ARCA. The
+    # issuers that used it keep their reference
+    def deleteCertificate(id)
+      request(:delete, "certificates/#{id}")
+
+      nil
     end
 
     # Authorize a certificate in ARCA for the electronic billing web service (wsfe), with the tax
@@ -303,7 +322,7 @@ module Afip
 
     # List webhook endpoints
     #
-    # Filters: status
+    # Filters: status, limit, cursor
     def getWebhookEndpoints(params = {})
       request(:get, "webhook-endpoints", nil, params)
     end
