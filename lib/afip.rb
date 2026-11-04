@@ -11,6 +11,7 @@ require_relative "afip/electronic_billing"
 require_relative "afip/register_inscription_proof"
 require_relative "afip/register_scope_ten"
 require_relative "afip/register_scope_thirteen"
+require_relative "afip/factura_sdk"
 
 # AfipSDK is the easyest way to connect with AFIP
 module Afip
@@ -27,11 +28,11 @@ module Afip
                   :ElectronicBilling,
                   :RegisterInscriptionProof,
                   :RegisterScopeTen,
-                  :RegisterScopeThirteen
+                  :RegisterScopeThirteen,
+                  :FacturaSDK
 
     def initialize(options)
-      raise "CUIT field is required in options" unless options.key?(:CUIT)
-
+      # CUIT is needed for the web services of ARCA; Factura SDK identifies the issuer by request
       self.CUIT = options[:CUIT]
       self.production = options.key?(:production) ? options[:production] : false
       self.cert = options[:cert]
@@ -42,6 +43,7 @@ module Afip
       self.RegisterInscriptionProof = Afip::WebServices::RegisterInscriptionProof.new(self)
       self.RegisterScopeTen = Afip::WebServices::RegisterScopeTen.new(self)
       self.RegisterScopeThirteen = Afip::WebServices::RegisterScopeThirteen.new(self)
+      self.FacturaSDK = Afip::FacturaSDK.new(self)
     end
 
     # Gets token authorization for an AFIP Web Service
